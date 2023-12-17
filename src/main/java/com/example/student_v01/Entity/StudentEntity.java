@@ -1,5 +1,7 @@
 package com.example.student_v01.Entity;
 
+import com.example.student_v01.PostDTO.PostStudentDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,4 +30,7 @@ public class StudentEntity {
     private int birthYear;
     @Column(name = "classNumber")
     private int classNumber;
+    // public static StudentEntity convertToEntity(PostStudentDTO postStudentDTO) {
+    //     return null;
+    // }
 }

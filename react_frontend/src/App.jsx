@@ -2,6 +2,7 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import './App.css'
 import CreateStudent  from './components/CreateStudent'
+import HomePage from './components/HomePage'
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -11,7 +12,7 @@ function App() {
       <BrowserRouter>
         <div>
           <Routes>
-            <Route path="/" element={<CreateStudent />} />
+            <Route path="/homepage" element={<HomePage />} />
             <Route path="/createStudent" element={<CreateStudent />} />
           </Routes>
         </div>

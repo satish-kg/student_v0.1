@@ -17,15 +17,15 @@ const CreateStudent = () =>{
     const navigate = useNavigate();
     const endpoint = "http://localhost:8989/api/v1/student/create";
 
-    const [id_, setId_] = useState("");
+    // const [id_, setId_] = useState("");
     const [name_, setName_] = useState("");
     const [birthYear_, setBirthYear_] = useState("");
     const [classNumber_, setClassNumber_] = useState("");
 
-    const debouncedIdHandler = _.debounce((value) =>{
-        setId_(value);
-        console.log(value);
-    })
+    // const debouncedIdHandler = _.debounce((value) =>{
+    //     setId_(value);
+    //     console.log(value);
+    // })
 
     const deboundedNameHandler = _.debounce((value) =>{
         setName_(value);
@@ -42,10 +42,10 @@ const CreateStudent = () =>{
         console.log(value);
     })
 
-    const handleIdChange = (e) =>{
-        const {value} = e.target;
-        debouncedIdHandler(value);
-    }
+    // const handleIdChange = (e) =>{
+    //     const {value} = e.target;
+    //     debouncedIdHandler(value);
+    // }
 
     const handleNameChange = (e) =>{
         const {value} = e.target;
@@ -64,26 +64,35 @@ const CreateStudent = () =>{
 
     const saveStudent = (e) =>{
         e.preventDefault();
-        const studentObj = { id : id_, name : name_, birthYear: birthYear_, classNumber: classNumber_ };
+        const studentObjDTO = { name : name_, birthYear: birthYear_, classNumber: classNumber_ };
         // const studentObj = {
         //     id: id,
         //     name: name,
         //     birthYear: birthYear,
         //     classNumber: classNumber
         // };
-        console.log("studenttttttttttttttttttt : "+ JSON.stringify(studentObj));
-        sendStudentObject(studentObj);
+        if(!name_ || !birthYear_ || !classNumber_){
+            alert("All the fields are mandatory!");
+            return;
+        }
+        console.log("studenttttttttttttttttttt : "+ JSON.stringify(studentObjDTO));
+        sendStudentObject(studentObjDTO);
     }
 
-    const sendStudentObject = async(studentObj) =>{
+    const sendStudentObject = async(studentObjDTO) =>{
         try{
             console.log("i tried");
-            const response = await axios.post(`${endpoint}`, studentObj);
+            const response = await axios.post('http://localhost:8989/api/v1/student/create', studentObjDTO);
+            // const response = await axios.post(`${endpoint}`, studentObjDTO);
             console.log("Data send : ", response.data);
             navigate("/createStudent");
         }catch(error){
-            console.log("Error : ", error);
+            console.log("Error in sending student object : ", error);
         }
+    }
+
+    const cancel = () =>{
+        navigate("/homepage");
     }
 
     return (
@@ -93,9 +102,9 @@ const CreateStudent = () =>{
                 <div className="card">
                     <form>
                         <div className="form-group">
-                            <label htmlFor="id">Id: <br />
+                            {/* <label htmlFor="id">Id: <br />
                                 <input type="number" onChange={handleIdChange} name='id' value={id_}  />
-                            </label>
+                            </label> */}
                         </div>
                         <div className="form-group">
                             <label htmlFor="name">Name: <br />
@@ -113,7 +122,7 @@ const CreateStudent = () =>{
                             </label>
                         </div>
                         <button type="submit" onClick={saveStudent}>Create</button>
-                        <button type='button'>Cancel</button>
+                        <button type='button' onClick={cancel}>Cancel</button>
                     </form>
                 </div>
             </div>
